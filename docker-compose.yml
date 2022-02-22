@@ -2,15 +2,27 @@ version: '3'
 
 services:
   fivem:
-    image: spritsail/fivem
+    image: erryial/fivem:x86
+    platform: "x86_64"
     container_name: fivem
     restart: always
     stdin_open: true
     tty: true
     volumes:
-      - "/path/to/resources/folder:/config"
+      - "./:/config"
     ports:
       - "30120:30120"
       - "30120:30120/udp"
     environment:
-      LICENSE_KEY: "license-key-here"
+      LICENSE_KEY: cfxk_3LG0M8zXAvgwdC7eiNT6_4FzTl
+  mysql:
+    image: mysql/mysql-server
+    container_name: mysql
+    volumes:
+      - "./data:/var/lib/mysql"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Erryial123
+      MYSQL_DATABASE: fivem
+

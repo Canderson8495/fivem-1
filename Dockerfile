@@ -1,5 +1,5 @@
-ARG FIVEM_NUM=4394
-ARG FIVEM_VER=4394-572b000db3f5a323039e0915dac64641d1db408e
+ARG FIVEM_NUM=5181
+ARG FIVEM_VER=5181-9eba8dcc91ee4c6ab009fcf7a47837edf81efd1a
 ARG DATA_VER=44fc68d7ee1b94ad67a211a6ff8234ce4ff760c8
 
 FROM spritsail/alpine:3.14 as builder
@@ -18,7 +18,7 @@ RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$
 
 ADD server.cfg opt/cfx-server-data
 ADD entrypoint usr/bin/entrypoint
-ADD resources opt/cfx-server-data
+ADD resources opt/cfx-server-data/resources
 
 RUN chmod +x /output/usr/bin/entrypoint
 
