@@ -2,7 +2,7 @@ version: '3'
 
 services:
   fivem:
-    image: erryial/fivem:x86
+    image: erryial/fivem
     platform: "x86_64"
     container_name: fivem
     restart: always
@@ -24,5 +24,7 @@ services:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: Erryial123
+      MYSQL_USER: user
+      MYSQL_PASSWORD: Erryial123
       MYSQL_DATABASE: fivem
 
