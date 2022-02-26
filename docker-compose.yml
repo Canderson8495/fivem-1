@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   #fivem:
   #  image: erryial/fivem
@@ -17,6 +16,7 @@ services:
   #    LICENSE_KEY: cfxk_3LG0M8zXAvgwdC7eiNT6_4FzTl
   mysql:
     image: mysql/mysql-server
+    platform: "arm64/v8"
     container_name: mysql
     volumes:
       - "./data:/var/lib/mysql"
