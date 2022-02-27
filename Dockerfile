@@ -15,9 +15,7 @@ RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$
  && mkdir -p /output/opt/cfx-server-data /output/usr/local/share \
  && apk -p $PWD add tini 
 
-RUN apk add openrc && apk add --no-cache openssh && rc-update add sshd \
-    && echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && adduser -h /config -s /bin/sh -D user \
-    && echo -n 'user:Erryial123' | chpasswd && ssh-keygen -A
+
     
 
 
@@ -50,6 +48,10 @@ COPY --from=builder /output/ /
 
 WORKDIR /config
 EXPOSE 30120
+
+RUN apk add openrc && apk add --no-cache openssh && rc-update add sshd \
+    && echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && adduser -h /config -s /bin/sh -D user \
+    && echo -n 'user:Erryial123' | chpasswd && ssh-keygen -A
 
 # Default to an empty CMD, so we can use it to add seperate args to the binary
 CMD [""]
