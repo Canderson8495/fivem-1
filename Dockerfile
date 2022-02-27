@@ -49,7 +49,7 @@ COPY --from=builder /output/ /
 WORKDIR /config
 EXPOSE 30120
 
-RUN apk add 
+RUN apk add openrc
 RUN apk add --no-cache openssh 
 RUN rc-update add sshd
 RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && adduser -h /config -s /bin/sh -D user \
