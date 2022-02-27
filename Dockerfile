@@ -7,9 +7,7 @@ FROM spritsail/alpine:3.14 as builder
 ARG FIVEM_VER
 ARG DATA_VER
 
-WORKDIR /output
-
-RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${FIVEM_VER}/fx.tar.xz \
+WORKDIR /output RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${FIVEM_VER}/fx.tar.xz \
         | tar xJ --strip-components=1 \
             --exclude alpine/dev --exclude alpine/proc \
             --exclude alpine/run --exclude alpine/sys \
@@ -43,6 +41,10 @@ COPY --from=builder /output/ /
 
 WORKDIR /config
 EXPOSE 30120
+
+RUN apk add openssh
+RUN rc-update add sshd
+RUN service sshd start
 
 # Default to an empty CMD, so we can use it to add seperate args to the binary
 CMD [""]
