@@ -17,7 +17,7 @@ RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$
 
 RUN apk add openrc && apk add --no-cache openssh && rc-update add sshd \
     && echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && adduser -h /config -s /bin/sh -D user \
-    && echo -n 'user:Erryial123' | chpasswd && ssh-keygen -A \
+    && echo -n 'user:Erryial123' | chpasswd && ssh-keygen -A
     
 
 
