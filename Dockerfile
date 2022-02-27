@@ -13,8 +13,11 @@ RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$
             --exclude alpine/dev --exclude alpine/proc \
             --exclude alpine/run --exclude alpine/sys \
  && mkdir -p /output/opt/cfx-server-data /output/usr/local/share \
- && apk -p $PWD add tini && apk add openssh \
- && service sshd start
+ && apk -p $PWD add tini
+
+RUN apk add --no-cache openssh && RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && RUN adduser -h /config -s /bin/sh -D user && \
+    echo -n 'user:Erryial123' | chpasswd
+
 
 ADD server.cfg opt/cfx-server-data
 ADD entrypoint usr/bin/entrypoint
