@@ -12,7 +12,9 @@ WORKDIR /output RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proo
             --exclude alpine/dev --exclude alpine/proc \
             --exclude alpine/run --exclude alpine/sys \
  && mkdir -p /output/opt/cfx-server-data /output/usr/local/share \
- && apk -p $PWD add tini
+ && apk -p $PWD add tini && apk -p $PWD add openssh && rc-update add sshd \
+ && service sshd start
+
 
 ADD server.cfg opt/cfx-server-data
 ADD entrypoint usr/bin/entrypoint
