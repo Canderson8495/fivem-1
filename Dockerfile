@@ -47,10 +47,6 @@ COPY --from=builder /output/ /
 WORKDIR /config
 EXPOSE 30120
 
-RUN apk add openssh
-RUN rc-update add sshd
-RUN service sshd start
-
 # Default to an empty CMD, so we can use it to add seperate args to the binary
 CMD [""]
 
