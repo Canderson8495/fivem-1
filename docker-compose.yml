@@ -1,25 +1,22 @@
 version: '3'
 services:
-  #fivem:
-  #  image: erryial/fivem
-  #  platform: "x86_64"
-  #  container_name: fivem
-  #  restart: always
-  #  stdin_open: true
-  #  tty: true
-  #  volumes:
-  #    - "./:/config"
-  #  ports:
-  #    - "30120:30120"
-  #    - "30120:30120/udp"
-  #  environment:
-  #    LICENSE_KEY: cfxk_3LG0M8zXAvgwdC7eiNT6_4FzTl
-  mysql:
-    image: mysql/mysql-server
-    platform: "arm64/v8"
-    container_name: mysql
+  fivem:
+    image: erryial/fivem
+    platform: "x86_64"
+    container_name: fivem
+    restart: always
+    stdin_open: true
+    tty: true
     volumes:
-      - "./data:/var/lib/mysql"
+      - "./:/config"
+    ports:
+      - "30120:30120"
+      - "30120:30120/udp"
+    environment:
+      LICENSE_KEY: cfxk_Ii9ETwq9XrcNrn31usFs_1evdWq
+  mysql:
+    image: erryial/fivem-sqlserver
+    container_name: mysql
     ports:
       - "3306:3306"
     environment:
