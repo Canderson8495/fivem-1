@@ -1,7 +1,7 @@
 version: '3'
 services:
   fivem:
-    image: localhost:9999/fivem:latest
+    image: localhost:9999/fivem:master
     platform: "x86_64"
     container_name: fivem
     restart: always
