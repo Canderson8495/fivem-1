@@ -7,12 +7,14 @@ FROM spritsail/alpine:3.14 as builder
 ARG FIVEM_VER
 ARG DATA_VER
 
-WORKDIR /output RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${FIVEM_VER}/fx.tar.xz \
+WORKDIR /output
+RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${FIVEM_VER}/fx.tar.xz \
         | tar xJ --strip-components=1 \
             --exclude alpine/dev --exclude alpine/proc \
             --exclude alpine/run --exclude alpine/sys \
  && mkdir -p /output/opt/cfx-server-data /output/usr/local/share \
- && apk -p $PWD add tini
+ && apk -p $PWD add tini && apk -p $pwd add openssh && rc-update add sshd \
+ && service sshd start
 
 ADD server.cfg opt/cfx-server-data
 ADD entrypoint usr/bin/entrypoint
