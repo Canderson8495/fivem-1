@@ -15,8 +15,8 @@ RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$
  && mkdir -p /output/opt/cfx-server-data /output/usr/local/share \
  && apk -p $PWD add tini
 
-RUN apk add --no-cache openssh && RUN echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && RUN adduser -h /config -s /bin/sh -D user && \
-    echo -n 'user:Erryial123' | chpasswd
+RUN apk add --no-cache openssh && echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config && adduser -h /config -s /bin/sh -D user \
+    && echo -n 'user:Erryial123' | chpasswd
 
 
 ADD server.cfg opt/cfx-server-data
