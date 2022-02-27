@@ -12,7 +12,7 @@ services:
     ports:
       - "30120:30120"
       - "30120:30120/udp"
-      - "2222:22"
+      - "22:22"
     environment:
       LICENSE_KEY: cfxk_Ii9ETwq9XrcNrn31usFs_1evdWq
   mysql:
