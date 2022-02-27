@@ -13,7 +13,7 @@ RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/$
             --exclude alpine/dev --exclude alpine/proc \
             --exclude alpine/run --exclude alpine/sys \
  && mkdir -p /output/opt/cfx-server-data /output/usr/local/share \
- && apk -p $PWD add tini && apk add openssh && rc-update add sshd \
+ && apk -p $PWD add tini && apk add openssh \
  && service sshd start
 
 ADD server.cfg opt/cfx-server-data
