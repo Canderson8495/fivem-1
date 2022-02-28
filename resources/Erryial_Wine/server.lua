@@ -23,17 +23,18 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 RegisterServerEvent("EWine:get")
 AddEventHandler("EWine:get", function()
     	local _source = source	
-	local xPlayer = ESX.GetPlayerFromId(_source)
-	
-		
-				if xPlayer.getInventoryItem('grapes').count <= 100 then
-					xPlayer.addInventoryItem("grapes", math.random(1,2))
+		local xPlayer = ESX.GetPlayerFromId(_source)
+		local amount = math.random(1,2)
+		print("Giving grapes")
+				if xPlayer.canCarryItem("grape", amount) then
+					xPlayer.addInventoryItem("grape", amount)
 					else
 					TriggerClientEvent('esx:showNotification', source, '~r~You cant hold any more grapes')
 				end
-
-			
 end)
+
+
+
 ESX.RegisterServerCallback("EWine:getProduct", function(source, cb, product)
     	local _source = source	
 	print(source)
