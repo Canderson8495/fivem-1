@@ -90,6 +90,7 @@ AddEventHandler('InteractSound_SV:PlayWithinDistance', function(maxDistance, sou
   end
 end)
 
+
 RegisterNetEvent('InteractSound_SV:PlayWithinDistance')
 AddEventHandler('InteractSound_SV:PlayWithinDistance', function(maxDistance, soundFile, soundVolume)
     local src = source
@@ -99,4 +100,10 @@ AddEventHandler('InteractSound_SV:PlayWithinDistance', function(maxDistance, sou
     else
         print(('[interact-sound] [^3WARNING^7] %s attempted to trigger InteractSound_SV:PlayWithinDistance over the distance limit ' .. DistanceLimit):format(GetPlayerName(src)))
     end
+end)
+
+
+RegisterNetEvent('InteractSound_SV:PlayWithinDistanceOfCoords')
+AddEventHandler('InteractSound_SV:PlayWithinDistanceOfCoords', function(maxDistance, soundFile, soundVolume, coords)
+    TriggerClientEvent('InteractSound_CL:PlayWithinDistance', -1, coords, maxDistance, soundFile, soundVolume)
 end)
