@@ -17,5 +17,10 @@ files {
     'client/html/index.html',
     -- Begin Sound Files Here...
     -- client/html/sounds/ ... .ogg
-    'client/html/sounds/demo.ogg'
+    'client/html/sounds/demo.ogg',
+    'client/html/sounds/boom.ogg',
+    'client/html/sounds/metal.ogg',
+    'client/html/sounds/shock.ogg',
+    'client/html/sounds/thud.ogg',
+    'client/html/sounds/water.ogg',
 }
