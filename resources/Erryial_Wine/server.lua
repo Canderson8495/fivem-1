@@ -12,10 +12,23 @@ mistakes = 0;
 lowqual = 0
 highqual = 0
 
+
+
+--DEV
+RegisterCommand('initWine', function(playerId, args, rawCommand)
+	Yeast = 30;
+    Grape = 30
+    TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
+    TriggerClientEvent("EWine:updateData", -1, "yeast", Grape)
+end, false)
+
+
+
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
+
 
 RegisterServerEvent("EWine:get")
 AddEventHandler("EWine:get", function()
@@ -346,7 +359,20 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(5000)
         if IsOn then
-            if Temperature > 110 or Temperature < 50 or Acid > 6.0 or Acid < 2.0 then
+            if Temperature > 110 then
+                mistakes = mistakes + 1
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'overheat', 0.1, Config.Temperature)
+                Citizen.Wait(5000)
+            end
+            if Temperature < 50 then
+                mistakes = mistakes + 1
+                Citizen.Wait(5000)
+            end
+            if Acid > 6.0 then
+                mistakes = mistakes + 1
+                Citizen.Wait(5000)
+            end
+            if Acid < 2.0 then
                 mistakes = mistakes + 1
                 Citizen.Wait(5000)
             end
