@@ -12,10 +12,23 @@ mistakes = 0;
 lowqual = 0
 highqual = 0
 
+
+
+--DEV
+RegisterCommand('initWine', function(playerId, args, rawCommand)
+	Yeast = 30;
+    Grape = 30
+    TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
+    TriggerClientEvent("EWine:updateData", -1, "yeast", Grape)
+end, false)
+
+
+
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
+
 
 RegisterServerEvent("EWine:get")
 AddEventHandler("EWine:get", function()
