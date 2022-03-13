@@ -122,8 +122,8 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
         if IsOn == true then
             Grape = Grape - 5
             Yeast = Yeast - 5
+            TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'startup', 0.1, Config.Switch)
         end
-        TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'startup', 0.1, Config.Switch)
         TriggerClientEvent("EWine:updateData", -1, fixItem, IsOn)
         TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
         TriggerClientEvent("EWine:updateData", -1, "yeast", Yeast)
