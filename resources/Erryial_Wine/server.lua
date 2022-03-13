@@ -123,7 +123,7 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
             Grape = Grape - 5
             Yeast = Yeast - 5
         end
-        TriggerClientEvent("EWine:updateData", -1, fixItem, true)
+        TriggerClientEvent("EWine:updateData", -1, fixItem, IsOn)
         TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
         TriggerClientEvent("EWine:updateData", -1, "yeast", Yeast)
     elseif fixItem == "yeast" then
@@ -366,7 +366,7 @@ end)
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(15000)
-        -- if IsOn then
+        if IsOn then
             itemBreak = math.random(1, 5)
             print(itemBreak)
             if itemBreak == 1 then
@@ -391,7 +391,7 @@ Citizen.CreateThread(function()
                 TriggerClientEvent("EWine:updateData", -1, "hopper", false)
                 TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'thud', 0.1, Config.hBox)
             end
-        -- 
+        end
     end
 end)
 Citizen.CreateThread(function()
