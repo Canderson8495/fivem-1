@@ -23,4 +23,5 @@ files {
     'client/html/sounds/shock.ogg',
     'client/html/sounds/thud.ogg',
     'client/html/sounds/water.ogg',
+    'client/html/sounds/startup.ogg',
 }
