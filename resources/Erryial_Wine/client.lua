@@ -309,188 +309,15 @@ Citizen.CreateThread(function()
             end
         end
         -- tBox
-        if GetDistanceBetweenCoords(Config.tBox.x, Config.tBox.y, Config.tBox.z, GetEntityCoords(GetPlayerPed(-1))) <
-            150 then
-            if Transformer then
-                DrawMarker(1, Config.tBox.x, Config.tBox.y, Config.tBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    0, 200, 0, 110, 0, 1, 0, 0)
-            else
-                DrawMarker(1, Config.tBox.x, Config.tBox.y, Config.tBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    200, 0, 0, 110, 0, 1, 0, 0)
-            end
-            tryPlayerFix(Config.tBox)
-
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
-        end
+        checkBoxFix(Config.tBox , "transformer")
         -- bBox
-        if GetDistanceBetweenCoords(Config.bBox.x, Config.bBox.y, Config.bBox.z, GetEntityCoords(GetPlayerPed(-1))) <
-            150 then
-            if Breaker then
-                DrawMarker(1, Config.bBox.x, Config.bBox.y, Config.bBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    0, 200, 0, 110, 0, 1, 0, 0)
-            else
-                DrawMarker(1, Config.bBox.x, Config.bBox.y, Config.bBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    200, 0, 0, 110, 0, 1, 0, 0)
-            end
-            if GetDistanceBetweenCoords(Config.bBox.x, Config.bBox.y, Config.bBox.z, GetEntityCoords(GetPlayerPed(-1)),
-                true) < 1.5 then
-                Draw3DText(Config.bBox.x, Config.bBox.y, Config.bBox.z,
-                    "~w~Breaker~y~\nPress [~b~E~y~] to fix the breaker", 4, 0.15, 0.1)
-                if IsControlJustReleased(0, Keys['E']) then
-                    -- Change this for all of them
-                    Citizen.CreateThread(function()
-                        local grindResult
-                        ESX.TriggerServerCallback('EWine:fix', function(output)
-                            grindResult = output
-                        end, "breaker")
-                        TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_WELDING', 0, true)
-                        Citizen.CreateThread(function()
-                            exports['progressBars']:startUI(2000, "Repairing")
-                            Citizen.Wait(2000)
-                            ClearPedTasksImmediately(PlayerPedId())
-                        end)
-                        -- Check if they have a coco leaf
-                        -- If they do, take it, and make it
-                        -- into a cocaine concoction
-                    end)
-                end
-            end
-
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
-        end
+        checkBoxFix(Config.bBox , "breaker")
         -- aBox
-        if GetDistanceBetweenCoords(Config.aBox.x, Config.aBox.y, Config.aBox.z, GetEntityCoords(GetPlayerPed(-1))) <
-            150 then
-            if Air then
-                DrawMarker(1, Config.aBox.x, Config.aBox.y, Config.aBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    0, 200, 0, 110, 0, 1, 0, 0)
-            else
-                DrawMarker(1, Config.aBox.x, Config.aBox.y, Config.aBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    200, 0, 0, 110, 0, 1, 0, 0)
-            end
-            if GetDistanceBetweenCoords(Config.aBox.x, Config.aBox.y, Config.aBox.z, GetEntityCoords(GetPlayerPed(-1)),
-                true) < 1.5 then
-                Draw3DText(Config.aBox.x, Config.aBox.y, Config.aBox.z,
-                    "~w~Filter~y~\nPress [~b~E~y~] to fix the air filter", 4, 0.15, 0.1)
-                if IsControlJustReleased(0, Keys['E']) then
-                    -- Change this for all of them
-                    Citizen.CreateThread(function()
-                        local grindResult
-                        ESX.TriggerServerCallback('EWine:fix', function(output)
-                            grindResult = output
-                        end, "air")
-                        TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_WELDING', 0, true)
-                        Citizen.CreateThread(function()
-                            exports['progressBars']:startUI(2000, "Repairing")
-                            Citizen.Wait(2000)
-                            ClearPedTasksImmediately(PlayerPedId())
-                        end)
-                        -- Check if they have a coco leaf
-                        -- If they do, take it, and make it
-                        -- into a cocaine concoction
-                    end)
-                end
-            end
-
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
-        end
+        checkBoxFix(Config.aBox , "air")
         -- lBox
-        if GetDistanceBetweenCoords(Config.lBox.x, Config.lBox.y, Config.lBox.z, GetEntityCoords(GetPlayerPed(-1))) <
-            150 then
-            if Liquid then
-                DrawMarker(1, Config.lBox.x, Config.lBox.y, Config.lBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    0, 200, 0, 110, 0, 1, 0, 0)
-            else
-                DrawMarker(1, Config.lBox.x, Config.lBox.y, Config.lBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    200, 0, 0, 110, 0, 1, 0, 0)
-            end
-            if GetDistanceBetweenCoords(Config.lBox.x, Config.lBox.y, Config.lBox.z, GetEntityCoords(GetPlayerPed(-1)),
-                true) < 1.5 then
-                Draw3DText(Config.lBox.x, Config.lBox.y, Config.lBox.z, "~w~Water~y~\nPress [~b~E~y~] to patch hole", 4,
-                    0.15, 0.1)
-                if IsControlJustReleased(0, Keys['E']) then
-                    -- Change this for all of them
-                    Citizen.CreateThread(function()
-                        local grindResult
-                        ESX.TriggerServerCallback('EWine:fix', function(output)
-                            grindResult = output
-                        end, "liquid")
-                        TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_WELDING', 0, true)
-                        Citizen.CreateThread(function()
-                            exports['progressBars']:startUI(2000, "Repairing")
-                            Citizen.Wait(2000)
-                            ClearPedTasksImmediately(PlayerPedId())
-                        end)
-                        -- Check if they have a coco leaf
-                        -- If they do, take it, and make it
-                        -- into a cocaine concoction
-                    end)
-                end
-            end
-
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
-        end
+        checkBoxFix(Config.lBox , "liquid")
         -- hBox
-        if GetDistanceBetweenCoords(Config.hBox.x, Config.hBox.y, Config.hBox.z, GetEntityCoords(GetPlayerPed(-1))) <
-            150 then
-            if Hopper then
-                DrawMarker(1, Config.hBox.x, Config.hBox.y, Config.hBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    0, 200, 0, 110, 0, 1, 0, 0)
-            else
-                DrawMarker(1, Config.hBox.x, Config.hBox.y, Config.hBox.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    200, 0, 0, 110, 0, 1, 0, 0)
-            end
-            if GetDistanceBetweenCoords(Config.hBox.x, Config.hBox.y, Config.hBox.z, GetEntityCoords(GetPlayerPed(-1)),
-                true) < 1.5 then
-                Draw3DText(Config.hBox.x, Config.hBox.y, Config.hBox.z,
-                    "~w~Hopper~y~\nPress [~b~E~y~] to fix the hopper", 4, 0.15, 0.1)
-                if IsControlJustReleased(0, Keys['E']) then
-                    -- Change this for all of them
-                    Citizen.CreateThread(function()
-                        local grindResult
-                        ESX.TriggerServerCallback('EWine:fix', function(output)
-                            grindResult = output
-                        end, "hopper")
-                        TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_WELDING', 0, true)
-                        Citizen.CreateThread(function()
-                            exports['progressBars']:startUI(2000, "Repairing")
-                            Citizen.Wait(2000)
-                            ClearPedTasksImmediately(PlayerPedId())
-                        end)
-                        -- Check if they have a coco leaf
-                        -- If they do, take it, and make it
-                        -- into a cocaine concoction
-                    end)
-                end
-            end
-
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
-        end
+        checkBoxFix(Config.hBox , "hopper")
         -- Acid
         if GetDistanceBetweenCoords(Config.Acid.x, Config.Acid.y, Config.Acid.z, GetEntityCoords(GetPlayerPed(-1))) <
             150 then
@@ -595,6 +422,27 @@ Citizen.CreateThread(function()
 end)
 
 
+
+function checkBoxFix(Box, name)
+    if GetDistanceBetweenCoords(Box.x, Box.y, Box.z, GetEntityCoords(GetPlayerPed(-1))) <
+            150 then
+            if Transformer then
+                DrawMarker(1, Box.x, Box.y, Box.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
+                    0, 200, 0, 110, 0, 1, 0, 0)
+            else
+                DrawMarker(1, Box.x, Box.y, Box.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
+                    200, 0, 0, 110, 0, 1, 0, 0)
+            end
+            tryPlayerFix(Box, name)
+
+            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
+                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
+                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
+                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
+                process = false
+            end
+        end
+end
 
 
 function tryPlayerFix(Box, name )
