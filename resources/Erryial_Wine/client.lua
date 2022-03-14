@@ -309,15 +309,15 @@ Citizen.CreateThread(function()
             end
         end
         -- tBox
-        checkBoxFix(Config.tBox , "transformer")
+        checkBoxFix(Config.tBox , "transformer", Transformer)
         -- bBox
-        checkBoxFix(Config.bBox , "breaker")
+        checkBoxFix(Config.bBox , "breaker", Breaker)
         -- aBox
-        checkBoxFix(Config.aBox , "air")
+        checkBoxFix(Config.aBox , "air", Air)
         -- lBox
-        checkBoxFix(Config.lBox , "liquid")
+        checkBoxFix(Config.lBox , "liquid", Liquid)
         -- hBox
-        checkBoxFix(Config.hBox , "hopper")
+        checkBoxFix(Config.hBox , "hopper", Hopper)
         -- Acid
         if GetDistanceBetweenCoords(Config.Acid.x, Config.Acid.y, Config.Acid.z, GetEntityCoords(GetPlayerPed(-1))) <
             150 then
@@ -423,10 +423,10 @@ end)
 
 
 
-function checkBoxFix(Box, name)
+function checkBoxFix(Box, name, currValue)
     if GetDistanceBetweenCoords(Box.x, Box.y, Box.z, GetEntityCoords(GetPlayerPed(-1))) <
             150 then
-            if Transformer then
+            if currValue then
                 DrawMarker(1, Box.x, Box.y, Box.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
                     0, 200, 0, 110, 0, 1, 0, 0)
             else
