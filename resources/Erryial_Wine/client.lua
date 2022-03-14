@@ -416,12 +416,22 @@ function tryPlayerFix(Box, name, prompt)
                 ESX.TriggerServerCallback('EWine:fix', function(output)
                     grindResult = output
                 end, name)
+
                 TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_WELDING', 0, true)
-                Citizen.CreateThread(function()
-                    exports['progressBars']:startUI(2000, "Repairing")
-                    Citizen.Wait(2000)
-                    ClearPedTasksImmediately(PlayerPedId())
-                end)
+                local CustomSettings = {
+                    settings = {
+                        handleEnd = true;  --Send a result message if true and callback when message closed or callback immediately without showing the message
+                        speed = 10; --pixels / second
+                        scoreWin = 1000; --Score to win
+                        scoreLose = -150; --Lose if this score is reached
+                        maxTime = 60000; --sec
+                        maxMistake = 5; --How many missed keys can there be before losing
+                        speedIncrement = 1; --How much should the speed increase when a key hit was successful
+                    },
+                    keys = {"a", "w", "d", "s", "g"}; --You can hash this out if you want to use default keys in the java side.
+                }
+                local example = exports['cd_keymaster']:StartKeyMaster(CustomSettings)
+                ClearPedTasksImmediately(PlayerPedId())
             end)
         end
     end
