@@ -167,50 +167,16 @@ Citizen.CreateThread(function()
         playerCoords = GetEntityCoords(GetPlayerPed(-1))
         -- pick up spot
 
-        for k in pairs(locations) do
-            if GetDistanceBetweenCoords(locations[k].x, locations[k].y, locations[k].z,
-                GetEntityCoords(GetPlayerPed(-1))) < 150 then
-                DrawMarker(3, locations[k].x, locations[k].y, locations[k].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0,
-                    1.0, 0, 200, 0, 200, 0, 1, 0, 0)
+		--Renders source ingrediants such as Grapes. 
+		--This will also facilitate players picking up the grape
+        renderAndGiveIngredients()
+        -- Put Grape spot
+		ingredLoader(Config.Processing, "grape")
+        
+		-- Put Yeast spot
+		ingredLoader(Config.AcidMixture, "yeast")
+		
 
-                if GetDistanceBetweenCoords(locations[k].x, locations[k].y, locations[k].z,
-                    GetEntityCoords(GetPlayerPed(-1)), false) < 2 then
-                    if not IsPedInAnyVehicle(GetPlayerPed(-1), false) then
-                        TriggerServerEvent('EWine:get')
-                        TriggerEvent('EWine:new', k)
-                    end
-                end
-
-            end
-        end
-        -- Put ingrediant spot
-        if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-            GetEntityCoords(GetPlayerPed(-1))) < 150 then
-            DrawMarker(1, Config.Processing.x, Config.Processing.y, Config.Processing.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                1.3, 1.3, 1.0, 0, 200, 0, 110, 0, 1, 0, 0)
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 1.5 then
-                Draw3DText(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    "~w~Wine Production~y~\nPress [~b~E~y~] to load ingredients.\n~w~" .. ingredLoad .. " concoctions",
-                    4, 0.15, 0.1)
-                -- Change this for all of them
-                if IsControlJustReleased(0, Keys['E']) then
-                    Citizen.CreateThread(function()
-
-                        ESX.TriggerServerCallback('EWine:fix', function(output)
-                            grindResult = output
-                        end, "grape")
-                    end)
-                end
-            end
-
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
-        end
         -- Show Switch to Start/Stop
         if GetDistanceBetweenCoords(Config.Switch.x, Config.Switch.y, Config.Switch.z, GetEntityCoords(GetPlayerPed(-1))) <
             150 then
@@ -309,15 +275,15 @@ Citizen.CreateThread(function()
             end
         end
         -- tBox
-        checkBoxFix(Config.tBox , "transformer", Transformer)
+        checkBoxFix(Config.tBox, "transformer", Transformer)
         -- bBox
-        checkBoxFix(Config.bBox , "breaker", Breaker)
+        checkBoxFix(Config.bBox, "breaker", Breaker)
         -- aBox
-        checkBoxFix(Config.aBox , "air", Air)
+        checkBoxFix(Config.aBox, "air", Air)
         -- lBox
-        checkBoxFix(Config.lBox , "liquid", Liquid)
+        checkBoxFix(Config.lBox, "liquid", Liquid)
         -- hBox
-        checkBoxFix(Config.hBox , "hopper", Hopper)
+        checkBoxFix(Config.hBox, "hopper", Hopper)
         -- Acid
         if GetDistanceBetweenCoords(Config.Acid.x, Config.Acid.y, Config.Acid.z, GetEntityCoords(GetPlayerPed(-1))) <
             150 then
@@ -376,35 +342,6 @@ Citizen.CreateThread(function()
                 process = false
             end
         end
-        -- Acid Mixture
-        if GetDistanceBetweenCoords(Config.AcidMixture.x, Config.AcidMixture.y, Config.AcidMixture.z,
-            GetEntityCoords(GetPlayerPed(-1))) < 150 then
-            DrawMarker(1, Config.AcidMixture.x, Config.AcidMixture.y, Config.AcidMixture.z, 0.0, 0.0, 0.0, 0.0, 0.0,
-                0.0, 1.3, 1.3, 1.0, 0, 200, 0, 110, 0, 1, 0, 0)
-            if GetDistanceBetweenCoords(Config.AcidMixture.x, Config.AcidMixture.y, Config.AcidMixture.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 1.5 then
-                Draw3DText(Config.AcidMixture.x, Config.AcidMixture.y, Config.AcidMixture.z,
-                    "~w~Yeast Mixture~y~\nPress [~b~E~y~] to mix your yeast.\n~w~" .. acidLoad .. " gallons", 4, 0.15,
-                    0.1)
-                if IsControlJustReleased(0, Keys['E']) then
-                    -- Change this for all of them
-                    Citizen.CreateThread(function()
-                        print("We are n yeast adder")
-                        local result = false
-                        ESX.TriggerServerCallback('EWine:fix', function(output)
-                            grindResult = output
-                        end, "yeast")
-                    end)
-                end
-            end
-
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
-        end
 
         --[[		
 	for k,v in ipairs(Config.FastTravels) do
@@ -421,35 +358,76 @@ Citizen.CreateThread(function()
     end
 end)
 
+function ingredLoader(loadLocation, item)
+	if GetDistanceBetweenCoords(loadLocation.x, loadLocation.y, loadLocation.z,
+	GetEntityCoords(GetPlayerPed(-1))) < 150 then
+	DrawMarker(1, loadLocation.x, loadLocation.y, loadLocation.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+		1.3, 1.3, 1.0, 0, 200, 0, 110, 0, 1, 0, 0)
+	if GetDistanceBetweenCoords(loadLocation.x, loadLocation.y, loadLocation.z,
+		GetEntityCoords(GetPlayerPed(-1)), true) < 1.5 then
+		Draw3DText(loadLocation.x, loadLocation.y, loadLocation.z,
+			"~w~Wine Production~y~\nPress [~b~E~y~] to load ingredients.\n~w~" .. ingredLoad .. item,
+			4, 0.15, 0.1)
+		-- Change this for all of them
+		if IsControlJustReleased(0, Keys['E']) then
+			Citizen.CreateThread(function()
 
+				ESX.TriggerServerCallback('EWine:fix', function(output)
+					grindResult = output
+				end, item)
+			end)
+		end
+	end
 
-function checkBoxFix(Box, name, currValue)
-    if GetDistanceBetweenCoords(Box.x, Box.y, Box.z, GetEntityCoords(GetPlayerPed(-1))) <
-            150 then
-            if currValue then
-                DrawMarker(1, Box.x, Box.y, Box.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    0, 200, 0, 110, 0, 1, 0, 0)
-            else
-                DrawMarker(1, Box.x, Box.y, Box.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0,
-                    200, 0, 0, 110, 0, 1, 0, 0)
-            end
-            tryPlayerFix(Box, name)
-
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
-        end
+	if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
+		GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
+		GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
+			GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
+		process = false
+	end
+	end
 end
 
+function renderAndGiveIngredients()
+    for k in pairs(locations) do
+        if GetDistanceBetweenCoords(locations[k].x, locations[k].y, locations[k].z, GetEntityCoords(GetPlayerPed(-1))) <
+            150 then
+            DrawMarker(3, locations[k].x, locations[k].y, locations[k].z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0,
+                0, 200, 0, 200, 0, 1, 0, 0)
 
-function tryPlayerFix(Box, name )
-    if GetDistanceBetweenCoords(Box.x, Box.y, Box.z, GetEntityCoords(GetPlayerPed(-1)), true) <
-        1.5 then
-        Draw3DText(Box.x, Box.y, Box.z,
-            "~w~"..name.."~y~\nPress [~b~E~y~] to fix the "..name, 4, 0.15, 0.1)
+            if GetDistanceBetweenCoords(locations[k].x, locations[k].y, locations[k].z,
+                GetEntityCoords(GetPlayerPed(-1)), false) < 2 then
+                if not IsPedInAnyVehicle(GetPlayerPed(-1), false) then
+                    TriggerServerEvent('EWine:get')
+                    TriggerEvent('EWine:new', k)
+                end
+            end
+
+        end
+    end
+end
+
+function checkBoxFix(Box, name, currValue)
+    if GetDistanceBetweenCoords(Box.x, Box.y, Box.z, GetEntityCoords(GetPlayerPed(-1))) < 150 then
+        if currValue then
+            DrawMarker(1, Box.x, Box.y, Box.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0, 0, 200, 0, 110, 0, 1, 0, 0)
+        else
+            DrawMarker(1, Box.x, Box.y, Box.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0, 200, 0, 0, 110, 0, 1, 0, 0)
+        end
+        tryPlayerFix(Box, name)
+
+        if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
+            GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
+            GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
+                GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
+            process = false
+        end
+    end
+end
+
+function tryPlayerFix(Box, name)
+    if GetDistanceBetweenCoords(Box.x, Box.y, Box.z, GetEntityCoords(GetPlayerPed(-1)), true) < 1.5 then
+        Draw3DText(Box.x, Box.y, Box.z, "~w~" .. name .. "~y~\nPress [~b~E~y~] to fix the " .. name, 4, 0.15, 0.1)
         if IsControlJustReleased(0, Keys['E']) then
             -- Change this for all of them
             Citizen.CreateThread(function()
