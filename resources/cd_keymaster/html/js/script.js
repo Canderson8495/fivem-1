@@ -66,19 +66,8 @@ function showKeymaster(){
         $("#keymaster-score").html("0");
         $("#keymaster-timer").html("0s");
         $("#keymaster-field").fadeIn(500, () => {
-            let countdown = 5;
-            $("#keymaster-overlay").show(0);
-            let cd = window.setInterval(() => {
-                if(countdown == -1){
-                    clearInterval(cd);
-                    $("#keymaster-overlay").hide(0);
-                    resolve(true);
-                } else if(countdown == 0){
-                    $("#keymaster-countdown").html("START");
-                    countdown--;
-                } else $("#keymaster-countdown").html(countdown--);
-                
-            }, 1000);
+            $("#keymaster-countdown").html("START");
+            resolve(true)
         })
     });
     return promise;
