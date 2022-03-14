@@ -20,9 +20,9 @@ Citizen.CreateThread(function()
 end)
 
 local acidLevel = 5.0
-local acidLoad = 0
+local yeastLoad = 0
 local temperature = 70
-local ingredLoad = 0
+local grapeLoad = 0
 local product = {}
 local isOn = false
 local mistakes = 0
@@ -171,10 +171,10 @@ Citizen.CreateThread(function()
 		--This will also facilitate players picking up the grape
         renderAndGiveIngredients()
         -- Put Grape spot
-		ingredLoader(Config.Processing, "grape")
+		ingredLoader(Config.Processing, "grape", grapeLoad)
         
 		-- Put Yeast spot
-		ingredLoader(Config.AcidMixture, "yeast")
+		ingredLoader(Config.AcidMixture, "yeast", yeastLoad)
 		
 
         -- Show Switch to Start/Stop
@@ -210,7 +210,7 @@ Citizen.CreateThread(function()
                             })
 
                         else
-                            if ingredLoad > 4 and acidLoad > 4 then
+                            if grapeLoad > 4 and yeastLoad > 4 then
                                 ESX.TriggerServerCallback('EWine:fix', function(output)
                                     grindResult = output
                                 end, "power")
@@ -358,7 +358,7 @@ Citizen.CreateThread(function()
     end
 end)
 
-function ingredLoader(loadLocation, item)
+function ingredLoader(loadLocation, item, numAvail)
 	if GetDistanceBetweenCoords(loadLocation.x, loadLocation.y, loadLocation.z,
 	GetEntityCoords(GetPlayerPed(-1))) < 150 then
 	DrawMarker(1, loadLocation.x, loadLocation.y, loadLocation.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
@@ -366,7 +366,7 @@ function ingredLoader(loadLocation, item)
 	if GetDistanceBetweenCoords(loadLocation.x, loadLocation.y, loadLocation.z,
 		GetEntityCoords(GetPlayerPed(-1)), true) < 1.5 then
 		Draw3DText(loadLocation.x, loadLocation.y, loadLocation.z,
-			"~w~Wine Production~y~\nPress [~b~E~y~] to load ingredients.\n~w~" .. ingredLoad .. item,
+			"~w~Wine Production~y~\nPress [~b~E~y~] to load ingredients.\n~w~" .. numAvail .. " " .. item,
 			4, 0.15, 0.1)
 		-- Change this for all of them
 		if IsControlJustReleased(0, Keys['E']) then
@@ -557,11 +557,11 @@ AddEventHandler('EWine:updateData', function(item, value)
         print(value)
         acidLevel = value
     elseif item == "grape" then
-        ingredLoad = value
+        grapeLoad = value
     elseif item == "yeast" then
         print("yeast added")
         print(value)
-        acidLoad = value
+        yeastLoad = value
     elseif item == "power" then
         isOn = value
         print(isOn)
