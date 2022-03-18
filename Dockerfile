@@ -35,8 +35,8 @@ ARG FIVEM_VER
 ARG FIVEM_NUM
 ARG DATA_VER
 
-LABEL maintainer="Spritsail <fivem@spritsail.io>" \
-      org.label-schema.vendor="Spritsail" \
+LABEL maintainer="Erryial <canderson8495@gmail.com>" \
+      org.label-schema.vendor="Blue Sky" \
       org.label-schema.name="FiveM" \
       org.label-schema.url="https://fivem.net" \
       org.label-schema.description="FiveM is a modification for Grand Theft Auto V enabling you to play multiplayer on customized dedicated servers." \
