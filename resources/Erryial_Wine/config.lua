@@ -10,7 +10,7 @@ Config.tBox = {x = 865.95  , y = -1967.92 ,z = 29.31}
 Config.bBox = {x = 893.34  , y = -2007.26 ,z = 35.80}
 Config.aBox = {x = 861.03  , y = -2004.42 ,z = 38.00}
 Config.hBox = {x = 911.75  , y = -1897.29 ,z = 41.00}
-Config.lBox = {x = 880.7 , y = -1911.26 ,z = 29.5}
+Config.lBox = {x = 900.80 , y = -1890.33 ,z = 34.2}
 Config.sell = {x = -1893.339, y = 2075.431, z = 140.9975}
 Config.FastTravels = {
 	{
