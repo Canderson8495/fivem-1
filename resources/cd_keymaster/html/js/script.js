@@ -173,7 +173,7 @@ async function updateScore(s){
     $("#keymaster-score").html(Math.ceil(score));
 }
 function initKeymaster(){
-    settings.handleEnd = true;
+    settings.handleEnd = false;
 
     settings.time = 0;
 
@@ -236,7 +236,7 @@ window.addEventListener("message", (event) => {
         } else {
             if(s.handleEnd != null){
                 settings.handleEnd = s.handleEnd;
-            } else settings.handleEnd = true;
+            } else settings.handleEnd = false;
             if(s.speed != null){
                 settings.speed = s.speed;
                 settings.baseSpeed = s.speed;
