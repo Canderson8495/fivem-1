@@ -198,7 +198,7 @@ Citizen.CreateThread(function()
         prompt = "~w~Hopper~y~\nPress [~b~E~y~] to fix the hopper"
         checkBoxFix(Config.hBox, "hopper", Hopper, prompt)
         -- Acid
-        prompt = "~w~Acid~y~\nPress [~b~E~y~] to make your wine more acidic\n~w~" .. acidLevel .. " ph"
+        prompt = "~w~Acid~y~\nPress [~b~E~y~] to make your wine more acidic\n~w~" .. tonumber(string.format("%.2f", acidLevel)) .. " ph"
         checkForVariableBoxFix(Config.Acid, "acid", acidLevel, prompt)
         --Temperature
         prompt = "~w~Temperature~y~\nPress [~b~E~y~] to lower the temperature.\n~w~" .. temperature .. " F"
@@ -552,7 +552,6 @@ AddEventHandler('EWine:updateData', function(item, value)
     elseif item == "grape" then
         grapeLoad = value
     elseif item == "yeast" then
-        print("yeast added")
         print(value)
         yeastLoad = value
     elseif item == "power" then

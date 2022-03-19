@@ -12,6 +12,8 @@ Config.aBox = {x = 861.78  , y = -2003.96 ,z = 37.40}
 Config.hBox = {x = 911.75  , y = -1897.29 ,z = 40.30}
 Config.lBox = {x = 900.80 , y = -1890.33 ,z = 34.2}
 Config.sell = {x = -1893.339, y = 2075.431, z = 140.9975}
+Config.breakRate = 25000 --ms
+Config.materialConsumptionRate = 1000
 Config.FastTravels = {
 	{
 		From = vector3(996.9, -3200.84, -37.00),
