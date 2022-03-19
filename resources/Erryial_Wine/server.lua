@@ -363,14 +363,14 @@ Citizen.CreateThread(function()
         if IsOn then
             if Temperature > 110 then
                 mistakes = mistakes + 1
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'overheat', 0.1, Config.Temperature)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'overheat', 0.1, Config.Temperature)
             end
             if Temperature < 50 then
                 mistakes = mistakes + 1
             end
             if Acid > 5.5 then
                 mistakes = mistakes + 1
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'acid', 0.1, Config.Acid)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'acid', 0.1, Config.Acid)
             end
             if Acid < 2.5 then
                 mistakes = mistakes + 1
@@ -399,23 +399,23 @@ Citizen.CreateThread(function()
                 print("transformer")
                 Transformer = false;
                 TriggerClientEvent("EWine:updateData", -1, "transformer", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'boom', 0.1, Config.tBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 45.0, 'boom', 0.1, Config.tBox)
             elseif itemBreak == 2 then
                 Air = false;
                 TriggerClientEvent("EWine:updateData", -1, "air", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'metal', 0.1, Config.aBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'metal', 0.1, Config.aBox)
             elseif itemBreak == 3 then
                 Breaker = false;
                 TriggerClientEvent("EWine:updateData", -1, "breaker", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'shock', 0.1, Config.bBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'shock', 0.1, Config.bBox)
             elseif itemBreak == 4 then
                 Liquid = false;
                 TriggerClientEvent("EWine:updateData", -1, "liquid", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'water', 0.1, Config.lBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'water', 0.1, Config.lBox)
             elseif itemBreak == 5 then
                 Hopper = false;
                 TriggerClientEvent("EWine:updateData", -1, "hopper", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'thud', 0.1, Config.hBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'thud', 0.1, Config.hBox)
             end
         end
     end
