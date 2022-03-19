@@ -81,7 +81,7 @@ AddEventHandler('InteractSound_CL:PlayWithinDistance', function(otherPlayerCoord
         local distance = GetDistanceBetweenCoords(otherPlayerCoords.x, otherPlayerCoords.y, otherPlayerCoords.z, myCoords)
         
         --Gives us a number between 0 and 1.0
-        local distancePorportion = 0.2 - (distance/maxDistance)/5
+        local distancePorportion = 0.1 - (distance/maxDistance)*0.1
 
         print("distance from sound: " .. distance .. " and max distance is " .. maxDistance .. ". The actual volume is " .. distancePorportion)
         

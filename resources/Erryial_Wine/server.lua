@@ -361,18 +361,18 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(15000)
         if IsOn then
-            if Temperature > 110 then
+            if Temperature > Config.highTemperature then
                 mistakes = mistakes + 1
                 TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'overheat', 0.1, Config.Temperature)
             end
-            if Temperature < 50 then
+            if Temperature < Config.lowTemperature then
                 mistakes = mistakes + 1
             end
-            if Acid > 5.5 then
+            if Acid > Config.highAcidLevel then
                 mistakes = mistakes + 1
                 TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'acid', 0.1, Config.Acid)
             end
-            if Acid < 2.5 then
+            if Acid < Config.lowAcidLevel then
                 mistakes = mistakes + 1
             end
         end

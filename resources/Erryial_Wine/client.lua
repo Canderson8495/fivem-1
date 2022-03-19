@@ -199,10 +199,10 @@ Citizen.CreateThread(function()
         checkBoxFix(Config.hBox, "hopper", Hopper, prompt)
         -- Acid
         prompt = "~w~Acid~y~\nPress [~b~E~y~] to make your wine more acidic\n~w~" .. tonumber(string.format("%.2f", acidLevel)) .. " ph"
-        checkForVariableBoxFix(Config.Acid, "acid", acidLevel, prompt)
+        checkForVariableBoxFix(Config.Acid, "acid", acidLevel, prompt, Config.lowAcidLevel, Config.highAcidLevel)
         --Temperature
         prompt = "~w~Temperature~y~\nPress [~b~E~y~] to lower the temperature.\n~w~" .. temperature .. " F"
-        checkForVariableBoxFix(Config.Temperature, "temperature", temperature, prompt)
+        checkForVariableBoxFix(Config.Temperature, "temperature", temperature, prompt, Config.lowTemperature, Config.highTemperature)
         
 
         -- EndProduct
@@ -308,9 +308,8 @@ function checkForStartSwitchAttempt()
         end
 end
 
-function checkForVariableBoxFix(fixLocation, name, currValue, prompt)
-    if GetDistanceBetweenCoords(fixLocation.x, fixLocation.y, fixLocation.z, GetEntityCoords(GetPlayerPed(-1))) <
-        150 then
+function checkForVariableBoxFix(fixLocation, name, currValue, prompt, low, high)
+    if GetDistanceBetweenCoords(fixLocation.x, fixLocation.y, fixLocation.z, GetEntityCoords(GetPlayerPed(-1))) < 150 then
         DrawMarker(1, fixLocation.x, fixLocation.y, fixLocation.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0, 0,
             200, 0, 110, 0, 1, 0, 0)
         if GetDistanceBetweenCoords(fixLocation.x, fixLocation.y, fixLocation.z, GetEntityCoords(GetPlayerPed(-1)),

@@ -26,6 +26,10 @@ Config.FastTravels = {
 		Marker = { type = 1, x = 2.0, y = 2.0, z = 0.5, r = 102, g = 0, b = 102, a = 100, rotate = false }
 	},
 }
-Config.DrawDistance = 50.0
+
+Config.highAcidLevel = 5.5
+Config.lowAcidLevel  = 2.5
+Config.lowTemperature = 50
+Config.highTemperature = 110
 
 
