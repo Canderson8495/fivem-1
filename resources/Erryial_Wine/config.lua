@@ -8,7 +8,7 @@ Config.Acid = {x = 888.91  , y = -1994.67 ,z = 29.6}
 Config.AcidMixture = {x = 905.99  , y = -1964.46 ,z = 37.3}
 Config.tBox = {x = 865.95  , y = -1967.92 ,z = 29.31}
 Config.bBox = {x = 893.34  , y = -2007.26 ,z = 35.80}
-Config.aBox = {x = 861.03  , y = -2004.42 ,z = 38.00}
+Config.aBox = {x = 861.78  , y = -2003.96 ,z = 37.40}
 Config.hBox = {x = 911.75  , y = -1897.29 ,z = 40.30}
 Config.lBox = {x = 900.80 , y = -1890.33 ,z = 34.2}
 Config.sell = {x = -1893.339, y = 2075.431, z = 140.9975}
