@@ -25,4 +25,5 @@ files {
     'client/html/sounds/water.ogg',
     'client/html/sounds/startup.ogg',
     'client/html/sounds/overheat.ogg',
+    'client/html/sounds/acid.ogg',
 }

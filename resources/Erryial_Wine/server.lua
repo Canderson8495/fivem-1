@@ -370,6 +370,7 @@ Citizen.CreateThread(function()
             end
             if Acid > 6.0 then
                 mistakes = mistakes + 1
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'acid', 0.1, Config.Acid)
                 Citizen.Wait(5000)
             end
             if Acid < 2.0 then
