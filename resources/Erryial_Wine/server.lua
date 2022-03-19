@@ -17,9 +17,11 @@ highqual = 0
 --DEV
 RegisterCommand('initWine', function(playerId, args, rawCommand)
 	Yeast = 30;
-    Grape = 30
+    Grape = 30;
+    IsOn = true
     TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
-    TriggerClientEvent("EWine:updateData", -1, "yeast", Grape)
+    TriggerClientEvent("EWine:updateData", -1, "yeast", Yeast)
+    TriggerClientEvent("EWine:updateData", -1, "power", IsOn)
 end, false)
 
 
@@ -357,25 +359,21 @@ end)
 
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(5000)
+        Citizen.Wait(15000)
         if IsOn then
             if Temperature > 110 then
                 mistakes = mistakes + 1
                 TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'overheat', 0.1, Config.Temperature)
-                Citizen.Wait(5000)
             end
             if Temperature < 50 then
                 mistakes = mistakes + 1
-                Citizen.Wait(5000)
             end
-            if Acid > 6.0 then
+            if Acid > 5.5 then
                 mistakes = mistakes + 1
                 TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'acid', 0.1, Config.Acid)
-                Citizen.Wait(5000)
             end
-            if Acid < 2.0 then
+            if Acid < 2.5 then
                 mistakes = mistakes + 1
-                Citizen.Wait(5000)
             end
         end
     end
@@ -393,7 +391,7 @@ Citizen.CreateThread(function()
 end)
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(15000)
+        Citizen.Wait(Config.breakRate)
         if IsOn then
             itemBreak = math.random(1, 5)
             print(itemBreak)
@@ -424,14 +422,15 @@ Citizen.CreateThread(function()
 end)
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(750)
+        Citizen.Wait(100)
         if IsOn then
+            Citizen.Wait(Config.materialConsumptionRate)
             if Temperature <= 212 then
                 Temperature = Temperature + 1;
                 TriggerClientEvent("EWine:updateData", -1, "temperature", Temperature)
             end
             if Acid < 14.0 then
-                Acid = Acid + 0.1;
+                Acid = Acid + 0.05;
                 TriggerClientEvent("EWine:updateData", -1, "acid", Acid)
             end
             print("Temperature and Acid Increase by 0.1")
@@ -442,7 +441,9 @@ Citizen.CreateThread(function()
 end)
 Citizen.CreateThread(function()
     while true do
+        Citizen.Wait(100)
         if IsOn then
+            Citizen.Wait(60000)
             print(mistakes)
             if mistakes < 5 then
                 highqual = highqual + 1
@@ -465,8 +466,6 @@ Citizen.CreateThread(function()
             end
 
         end
-        Citizen.Wait(60000)
-
     end
 end)
 
