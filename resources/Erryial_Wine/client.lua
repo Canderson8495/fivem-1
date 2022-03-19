@@ -417,7 +417,7 @@ function tryPlayerFix(Box, name, prompt)
                 TaskStartScenarioInPlace(PlayerPedId(), 'WORLD_HUMAN_WELDING', 0, true)
                 local CustomSettings = {
                     settings = {
-                        handleEnd = true;  --Send a result message if true and callback when message closed or callback immediately without showing the message
+                        handleEnd = false;  --Send a result message if true and callback when message closed or callback immediately without showing the message
                         speed = 7; --pixels / second
                         scoreWin = 150; --Score to win
                         scoreLose = -150; --Lose if this score is reached
