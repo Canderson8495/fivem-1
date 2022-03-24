@@ -5,7 +5,7 @@ Config.Switch = {x = 917.64  , y = -1897.74 ,z = 29.6}
 Config.EndProduct = {x = 900.01  , y = -1897.53 ,z = 29.6}
 Config.Temperature = {x = 910.95  , y = -1903.2 ,z = 29.6}
 Config.Acid = {x = 888.91  , y = -1994.67 ,z = 29.6}
-Config.AcidMixture = {x = 905.99  , y = -1964.46 ,z = 37.3}
+Config.WaterStorage = {x = 905.99  , y = -1964.46 ,z = 37.3}
 Config.tBox = {x = 865.95  , y = -1967.92 ,z = 29.31}
 Config.bBox = {x = 893.34  , y = -2007.26 ,z = 35.80}
 Config.aBox = {x = 862.55  , y = -2004.25 ,z = 37.60}

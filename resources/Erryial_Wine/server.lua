@@ -6,7 +6,7 @@ Liquid = false;
 Temperature = 70;
 Acid = 5.0;
 IsOn = false;
-Yeast = 0;
+Water = 0;
 Grape = 0;
 mistakes = 0;
 lowqual = 0
@@ -16,11 +16,11 @@ highqual = 0
 
 --DEV
 RegisterCommand('initWine', function(playerId, args, rawCommand)
-	Yeast = 30;
+	Water = 30;
     Grape = 30;
     IsOn = true
     TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
-    TriggerClientEvent("EWine:updateData", -1, "yeast", Yeast)
+    TriggerClientEvent("EWine:updateData", -1, "water", Water)
     TriggerClientEvent("EWine:updateData", -1, "power", IsOn)
 end, false)
 
@@ -39,7 +39,7 @@ AddEventHandler("EWine:get", function()
     local amount = math.random(1, 2)
     print("Giving grapes!!!")
     xPlayer.addInventoryItem('grape', amount)
-    xPlayer.addInventoryItem('yeast', amount)
+    xPlayer.addInventoryItem('water', amount)
     --[[ if xPlayer.canCarryItem("grape", amount) then
 					
 					else
@@ -136,20 +136,20 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
         IsOn = not IsOn
         if IsOn == true then
             Grape = Grape - 5
-            Yeast = Yeast - 5
+            Water = Water - 5
             TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'startup', 0.1, Config.Switch)
         end
         TriggerClientEvent("EWine:updateData", -1, fixItem, IsOn)
         TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
-        TriggerClientEvent("EWine:updateData", -1, "yeast", Yeast)
-    elseif fixItem == "yeast" then
+        TriggerClientEvent("EWine:updateData", -1, "water", Water)
+    elseif fixItem == "water" then
         local _source = source
         local xPlayer = ESX.GetPlayerFromId(_source)
-        if xPlayer.getInventoryItem('yeast').count >= 1 then
-            xPlayer.removeInventoryItem('yeast', 1)
-            Yeast = Yeast + 1
+        if xPlayer.getInventoryItem('water').count >= 1 then
+            xPlayer.removeInventoryItem('water', 1)
+            Water = Water + 1
             TriggerClientEvent("pNotify:SendNotification", _source, {
-                text = "You pour your yeast into the vats.",
+                text = "You pour your water into the vats.",
                 type = "success",
                 queue = "lmao",
                 timeout = 3000,
@@ -158,14 +158,14 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
         else
 
             TriggerClientEvent("pNotify:SendNotification", _source, {
-                text = "You don't have anymore yeast.",
+                text = "You don't have anymore water.",
                 type = "error",
                 queue = "lmao",
                 timeout = 3000,
                 layout = "centerLeft"
             })
         end
-        TriggerClientEvent("EWine:updateData", -1, fixItem, Yeast)
+        TriggerClientEvent("EWine:updateData", -1, fixItem, Water)
     elseif fixItem == "grape" then
         local _source = source
         local xPlayer = ESX.GetPlayerFromId(_source)
@@ -455,11 +455,11 @@ Citizen.CreateThread(function()
                 print("reward 1 low qual wine")
             end
             mistakes = 0
-            if Yeast - 5 > -1 and Grape - 5 > -1 then
-                Yeast = Yeast - 5
+            if Water - 5 > -1 and Grape - 5 > -1 then
+                Water = Water - 5
                 Grape = Grape - 5
                 TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
-                TriggerClientEvent("EWine:updateData", -1, "yeast", Yeast)
+                TriggerClientEvent("EWine:updateData", -1, "water", Water)
             else
                 IsOn = false
                 TriggerClientEvent("EWine:updateData", -1, "power", false)
@@ -490,7 +490,7 @@ end)
 RegisterServerEvent("syncUp")
 AddEventHandler('syncUp', function()
     TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
-    TriggerClientEvent("EWine:updateData", -1, "yeast", Yeast)
+    TriggerClientEvent("EWine:updateData", -1, "water", Water)
     TriggerClientEvent("EWine:updateData", -1, "power", IsOn)
     TriggerClientEvent("EWine:updateData", -1, "highqual", highqual)
     TriggerClientEvent("EWine:updateData", -1, "lowqual", lowqual)

@@ -20,7 +20,7 @@ Citizen.CreateThread(function()
 end)
 
 local acidLevel = 5.0
-local yeastLoad = 0
+local waterLoad = 0
 local temperature = 70
 local grapeLoad = 0
 local product = {}
@@ -174,9 +174,9 @@ Citizen.CreateThread(function()
         prompt = "~w~Grape Grinder~y~\nPress [~b~E~y~] to put your grapes in.\n~w~" .. grapeLoad .. " ounces";
 		ingredLoader(Config.Processing, "grape", grapeLoad, prompt)
         
-		-- Put Yeast spot
-        prompt = "~w~Yeast Mixture~y~\nPress [~b~E~y~] to mix your yeast.\n~w~" .. yeastLoad .. " gallons";
-		ingredLoader(Config.AcidMixture, "yeast", yeastLoad, prompt)
+		-- Put Water spot
+        prompt = "~w~Water Storage~y~\nPress [~b~E~y~] to add your water.\n~w~" .. waterLoad .. " gallons";
+		ingredLoader(Config.WaterStorage, "water", waterLoad, prompt)
 		
 
         -- Show Switch to Start/Stop
@@ -271,7 +271,7 @@ function checkForStartSwitchAttempt()
                             })
 
                         else
-                            if grapeLoad > 4 and yeastLoad > 4 then
+                            if grapeLoad > 4 and waterLoad > 4 then
                                 ESX.TriggerServerCallback('EWine:fix', function(output)
                                     grindResult = output
                                 end, "power")
@@ -553,9 +553,9 @@ AddEventHandler('EWine:updateData', function(item, value)
         acidLevel = value
     elseif item == "grape" then
         grapeLoad = value
-    elseif item == "yeast" then
+    elseif item == "water" then
         print(value)
-        yeastLoad = value
+        waterLoad = value
     elseif item == "power" then
         isOn = value
         print(isOn)
