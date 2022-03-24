@@ -17,6 +17,7 @@ services:
   mysql:
     image: erryial/fivem-sqlserver
     container_name: mysql
+    restart: always
     ports:
       - "3306:3306"
     environment:
