@@ -311,9 +311,9 @@ end
 function checkForVariableBoxFix(fixLocation, name, currValue, prompt, low, high)
     if GetDistanceBetweenCoords(fixLocation.x, fixLocation.y, fixLocation.z, GetEntityCoords(GetPlayerPed(-1))) < 150 then
             if currValue < low or currValue > high then
-                DrawMarker(1, Box.x, Box.y, Box.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0, 200, 0, 0, 110, 0, 1, 0, 0)
-            else then 
-                DrawMarker(1, Box.x, Box.y, Box.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0, 0, 200, 0, 110, 0, 1, 0, 0)
+                DrawMarker(1, fixLocation.x, fixLocation.y, fixLocation.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0, 200, 0, 0, 110, 0, 1, 0, 0)
+            else 
+                DrawMarker(1, fixLocation.x, fixLocation.y, fixLocation.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3, 1.3, 1.0, 0, 200, 0, 110, 0, 1, 0, 0)
             end
         if GetDistanceBetweenCoords(fixLocation.x, fixLocation.y, fixLocation.z, GetEntityCoords(GetPlayerPed(-1)),
             true) < 1.5 then
