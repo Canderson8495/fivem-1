@@ -93,9 +93,13 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
     elseif fixItem == "water" then
         local _source = source
         local xPlayer = ESX.GetPlayerFromId(_source)
-        if xPlayer.getInventoryItem('water').count >= 1 then
-            xPlayer.removeInventoryItem('water', 1)
-            Water = Water + 1
+        if xPlayer.getInventoryItem('water').count >= Config.ingredLoadAmount then
+            xPlayer.removeInventoryItem('water', Config.ingredLoadAmount)
+            Water = Water + Config.ingredLoadAmount
+        elseif xPlayer.getInventoryItem('water').count >= 1 then
+            local playerWaterCount = xPlayer.getInventoryItem('water').count
+            xPlayer.removeInventoryItem('water', playerWaterCount)
+            Water = Water + playerWaterCount
         else
             TriggerClientEvent('esx:showNotification', source, "~r~You don't have anymore water.")
         end
@@ -103,9 +107,13 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
     elseif fixItem == "grape" then
         local _source = source
         local xPlayer = ESX.GetPlayerFromId(_source)
-        if xPlayer.getInventoryItem('grape').count >= 1 then
-            xPlayer.removeInventoryItem('grape', 1)
-            Grape = Grape + 1
+        if xPlayer.getInventoryItem('grape').count >= Config.ingredLoadAmount then
+            xPlayer.removeInventoryItem('grape', Config.ingredLoadAmount)
+            Grape = Grape + Config.ingredLoadAmount
+        elseif xPlayer.getInventoryItem('grape').count >= 1 then
+            local playerGrapeCount = xPlayer.getInventoryItem('grape').count
+            xPlayer.removeInventoryItem('grape', playerGrapeCount)
+            Grape = Grape + playerGrapeCount
         else
             TriggerClientEvent('esx:showNotification', source, "~r~You don't have anymore grapes.")
         end

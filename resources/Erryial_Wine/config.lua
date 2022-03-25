@@ -42,4 +42,4 @@ Config.startAmount = 5
 
 Config.fineWinePrice = 2000
 Config.basicWinePrice = 400
-
+Config.ingredLoadAmount = 5
