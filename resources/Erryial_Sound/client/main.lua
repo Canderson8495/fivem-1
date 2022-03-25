@@ -83,11 +83,8 @@ AddEventHandler('Erryial_Sound_CL:PlayWithinDistance', function(soundOrigin, max
         --Gives us a number between 0 and 1.0
         local distancePorportion = 0.1 - (distance/maxDistance)*0.1
 
-        print("distance from sound: " .. distance .. " and max distance is " .. maxDistance .. ". The actual volume is " .. distancePorportion)
-        
 
 		if distance < maxDistance then
-            print("playing sound")
 			SendNUIMessage({
 				transactionType = 'playSound',
 				transactionFile  = soundFile,
