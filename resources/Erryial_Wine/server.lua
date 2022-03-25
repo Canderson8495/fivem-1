@@ -64,7 +64,7 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
         if highqual > 0 then
             local _source = source
             local xPlayer = ESX.GetPlayerFromId(_source)
-            if xPlayer.getInventoryItem('highqualwine').count < 20 then
+            if xPlayer.canCarryItem("highqualwine", 1) then
                 xPlayer.addInventoryItem('highqualwine', 1)
                 highqual = highqual - 1
 
@@ -75,10 +75,9 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
         elseif lowqual > 0 then
             local _source = source
             local xPlayer = ESX.GetPlayerFromId(_source)
-            if xPlayer.getInventoryItem('lowqualwine').count < 20 then
+            if xPlayer.canCarryItem("lowqualwine", 1) then
                 xPlayer.addInventoryItem('lowqualwine', 1)
                 lowqual = lowqual - 1
-
                 TriggerClientEvent("EWine:updateData", -1, "lowqual", lowqual)
             else
                 TriggerClientEvent('esx:showNotification', source, "~r~You can't hold anymore of this wine.")
