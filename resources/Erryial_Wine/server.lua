@@ -43,19 +43,6 @@ AddEventHandler("EWine:get", function()
 	end
 end)
 
-ESX.RegisterServerCallback("EWine:getProduct", function(source, cb, product)
-    local _source = source
-    local xPlayer = ESX.GetPlayerFromId(_source)
-
-    if product == nil then
-        TriggerClientEvent('esx:showNotification', source, "~r~You don't have any end product ready.")
-        cb(false)
-
-    else
-        xPlayer.addInventoryItem(product, 1)
-        cb(true)
-    end
-end)
 ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
     if fixItem == "transformer" then
         Transformer = true;
@@ -280,5 +267,4 @@ AddEventHandler('syncUp', function()
     TriggerClientEvent("EWine:updateData", -1, "liquid", Liquid)
     TriggerClientEvent("EWine:updateData", -1, "temperature", Temperature)
     TriggerClientEvent("EWine:updateData", -1, "acid", Acid)
-
 end)

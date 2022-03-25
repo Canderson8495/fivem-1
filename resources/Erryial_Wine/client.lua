@@ -239,21 +239,9 @@ function checkForStartSwitchAttempt()
                                 ESX.TriggerServerCallback('EWine:fix', function(output)
                                     grindResult = output
                                 end, "power")
-                                TriggerEvent("pNotify:SendNotification", {
-                                    text = "The machine slowly begins to hum to life.",
-                                    type = "success",
-                                    queue = "wow",
-                                    timeout = "5000",
-                                    layout = "centerLeft"
-                                })
                             else
-                                TriggerEvent("pNotify:SendNotification", {
-                                    text = "The machine is empty!",
-                                    type = "error",
-                                    queue = "wow",
-                                    timeout = "3000",
-                                    layout = "centerLeft"
-                                })
+                                ESX.ShowNotification("The machine is empty! Add more ingrediants")
+                                ESX.ShowNotification("The machine is empty! Add more ingrediants")
                             end
                         end
 
