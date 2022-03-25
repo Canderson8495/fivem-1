@@ -17,6 +17,7 @@ Config.temperatureLocation = {x = 910.95  , y = -1903.2 ,z = 29.6}
 
 
 Config.sell = {x = -1893.339, y = 2075.431, z = 140.9975}
+Config.mistakeCheckInterval = 15000
 Config.breakRate = 25000 --ms
 Config.variableRiseRate = 1000
 Config.FastTravels = {
@@ -41,5 +42,4 @@ Config.startAmount = 5
 
 Config.fineWinePrice = 2000
 Config.basicWinePrice = 400
-
 

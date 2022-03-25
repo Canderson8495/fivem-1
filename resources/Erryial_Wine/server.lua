@@ -12,11 +12,9 @@ mistakes = 0;
 lowqual = 0
 highqual = 0
 
-
-
---DEV
+-- DEV
 RegisterCommand('initWine', function(playerId, args, rawCommand)
-	Water = 30;
+    Water = 30;
     Grape = 30;
     IsOn = true
     TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
@@ -24,12 +22,10 @@ RegisterCommand('initWine', function(playerId, args, rawCommand)
     TriggerClientEvent("EWine:updateData", -1, "power", IsOn)
 end, false)
 
-
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
 end)
-
 
 RegisterServerEvent("EWine:get")
 AddEventHandler("EWine:get", function()
@@ -38,9 +34,9 @@ AddEventHandler("EWine:get", function()
     local amount = math.random(1, 2)
     if xPlayer.canCarryItem("grape", amount) then
         xPlayer.addInventoryItem('grape', amount)
-	else
-		TriggerClientEvent('esx:showNotification', source, '~r~You cant hold any more grapes')
-	end
+    else
+        TriggerClientEvent('esx:showNotification', source, '~r~You cant hold any more grapes')
+    end
 end)
 
 ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
@@ -129,14 +125,14 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
     cb(true)
 end)
 
-
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(15000)
         if IsOn then
             if Temperature > Config.highTemperature then
                 mistakes = mistakes + 1
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'overheat', 0.1, Config.temperatureLocation)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'overheat', 0.1,
+                    Config.temperatureLocation)
             end
             if Temperature < Config.lowTemperature then
                 mistakes = mistakes + 1
@@ -153,11 +149,10 @@ Citizen.CreateThread(function()
 end)
 Citizen.CreateThread(function()
     while true do
-        Citizen.Wait(5000)
+        Citizen.Wait(Config.mistakeCheckInterval)
         if IsOn then
             if not Hopper or not Air or not Transformer or not Breaker or not Liquid then
                 mistakes = mistakes + 1
-                Citizen.Wait(5000)
             end
         end
     end
@@ -170,7 +165,8 @@ Citizen.CreateThread(function()
             if itemBreak == 1 then
                 Transformer = false;
                 TriggerClientEvent("EWine:updateData", -1, "transformer", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 45.0, 'boom', 0.1, Config.transformerLocation)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 45.0, 'boom', 0.1,
+                    Config.transformerLocation)
             elseif itemBreak == 2 then
                 Air = false;
                 TriggerClientEvent("EWine:updateData", -1, "air", false)
