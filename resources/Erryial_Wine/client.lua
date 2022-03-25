@@ -350,7 +350,7 @@ function tryPlayerFix(Box, name, prompt)
                     },
                     keys = {"a", "w", "d", "s", "g"} -- You can hash this out if you want to use default keys in the java side.
                 }
-                local win = exports['cd_keymaster']:StartKeyMaster(CustomSettings)
+                local win = exports['Erryial_Keymaster']:StartKeyMaster(CustomSettings)
                 ClearPedTasksImmediately(PlayerPedId())
                 if win == true then
                     ESX.TriggerServerCallback('EWine:fix', function(output)
