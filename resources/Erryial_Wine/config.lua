@@ -18,7 +18,7 @@ Config.temperatureLocation = {x = 910.95  , y = -1903.2 ,z = 29.6}
 
 Config.sell = {x = -1893.339, y = 2075.431, z = 140.9975}
 Config.breakRate = 25000 --ms
-Config.materialConsumptionRate = 1000
+Config.variableRiseRate = 1000
 Config.FastTravels = {
 	{
 		From = vector3(996.9, -3200.84, -37.00),
@@ -36,5 +36,10 @@ Config.highAcidLevel = 5.5
 Config.lowAcidLevel  = 2.5
 Config.lowTemperature = 50
 Config.highTemperature = 110
+
+Config.startAmount = 5
+
+Config.fineWinePrice = 2000
+Config.basicWinePrice = 400
 
 

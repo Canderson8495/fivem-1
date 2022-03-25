@@ -25,7 +25,6 @@ RegisterCommand('initWine', function(playerId, args, rawCommand)
 end, false)
 
 
-
 ESX = nil
 TriggerEvent('esx:getSharedObject', function(obj)
     ESX = obj
@@ -37,31 +36,19 @@ AddEventHandler("EWine:get", function()
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
     local amount = math.random(1, 2)
-    print("Giving grapes!!!")
-    xPlayer.addInventoryItem('grape', amount)
-    xPlayer.addInventoryItem('water', amount)
-    --[[ if xPlayer.canCarryItem("grape", amount) then
-					
-					else
-					TriggerClientEvent('esx:showNotification', source, '~r~You cant hold any more grapes')
-				end ]]
+    if xPlayer.canCarryItem("grape", amount) then
+        xPlayer.addInventoryItem('grape', amount)
+	else
+		TriggerClientEvent('esx:showNotification', source, '~r~You cant hold any more grapes')
+	end
 end)
 
 ESX.RegisterServerCallback("EWine:getProduct", function(source, cb, product)
     local _source = source
-    print(source)
-    print(cb)
-    print(product)
     local xPlayer = ESX.GetPlayerFromId(_source)
 
     if product == nil then
-        TriggerClientEvent("pNotify:SendNotification", _source, {
-            text = "You don't have any end product ready.",
-            type = "error",
-            queue = "lmao",
-            timeout = 3000,
-            layout = "centerLeft"
-        })
+        TriggerClientEvent('esx:showNotification', source, "~r~You don't have any end product ready.")
         cb(false)
 
     else
@@ -70,8 +57,6 @@ ESX.RegisterServerCallback("EWine:getProduct", function(source, cb, product)
     end
 end)
 ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
-    print("Called fix")
-    print(fixItem)
     if fixItem == "transformer" then
         Transformer = true;
         TriggerClientEvent("EWine:updateData", -1, fixItem, true)
@@ -85,14 +70,7 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
 
                 TriggerClientEvent("EWine:updateData", -1, "highqual", highqual)
             else
-                TriggerClientEvent("pNotify:SendNotification", _source, {
-                    text = "You can't hold anymore of this wine.",
-                    type = "success",
-                    queue = "lmao",
-                    timeout = 3000,
-                    layout = "centerLeft"
-                })
-                -- inventory full
+                TriggerClientEvent('esx:showNotification', source, "~r~You can't hold anymore of this wine.")
             end
         elseif lowqual > 0 then
             local _source = source
@@ -103,22 +81,10 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
 
                 TriggerClientEvent("EWine:updateData", -1, "lowqual", lowqual)
             else
-                TriggerClientEvent("pNotify:SendNotification", _source, {
-                    text = "You can't hold anymore of this wine.",
-                    type = "success",
-                    queue = "lmao",
-                    timeout = 3000,
-                    layout = "centerLeft"
-                })
+                TriggerClientEvent('esx:showNotification', source, "~r~You can't hold anymore of this wine.")
             end
         else
-            TriggerClientEvent("pNotify:SendNotification", _source, {
-                text = "There is no wine for you to take.",
-                type = "success",
-                queue = "lmao",
-                timeout = 3000,
-                layout = "centerLeft"
-            })
+            TriggerClientEvent('esx:showNotification', source, "~r~There is no wine for you to take.")
         end
     elseif fixItem == "breaker" then
         Breaker = true;
@@ -135,8 +101,8 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
     elseif fixItem == "power" then
         IsOn = not IsOn
         if IsOn == true then
-            Grape = Grape - 5
-            Water = Water - 5
+            Grape = Grape - Config.startAmount
+            Water = Water - Config.startAmount
             TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 50.0, 'startup', 0.1, Config.Switch)
         end
         TriggerClientEvent("EWine:updateData", -1, fixItem, IsOn)
@@ -148,22 +114,8 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
         if xPlayer.getInventoryItem('water').count >= 1 then
             xPlayer.removeInventoryItem('water', 1)
             Water = Water + 1
-            TriggerClientEvent("pNotify:SendNotification", _source, {
-                text = "You pour your water into the vats.",
-                type = "success",
-                queue = "lmao",
-                timeout = 3000,
-                layout = "centerLeft"
-            })
         else
-
-            TriggerClientEvent("pNotify:SendNotification", _source, {
-                text = "You don't have anymore water.",
-                type = "error",
-                queue = "lmao",
-                timeout = 3000,
-                layout = "centerLeft"
-            })
+            TriggerClientEvent('esx:showNotification', source, "~r~You don't have anymore water.")
         end
         TriggerClientEvent("EWine:updateData", -1, fixItem, Water)
     elseif fixItem == "grape" then
@@ -172,23 +124,8 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
         if xPlayer.getInventoryItem('grape').count >= 1 then
             xPlayer.removeInventoryItem('grape', 1)
             Grape = Grape + 1
-            TriggerClientEvent("pNotify:SendNotification", _source, {
-                text = "You pour your grapes into the hopper",
-                type = "success",
-                queue = "lmao",
-                timeout = 3000,
-                layout = "centerLeft"
-            })
-            print("test")
         else
-
-            TriggerClientEvent("pNotify:SendNotification", _source, {
-                text = "You don't have anymore grapes.",
-                type = "error",
-                queue = "lmao",
-                timeout = 3000,
-                layout = "centerLeft"
-            })
+            TriggerClientEvent('esx:showNotification', source, "~r~You don't have anymore grapes.")
         end
         TriggerClientEvent("EWine:updateData", -1, fixItem, Grape)
         cb(true)
@@ -203,159 +140,9 @@ ESX.RegisterServerCallback("EWine:fix", function(source, cb, fixItem)
         end
         TriggerClientEvent("EWine:updateData", -1, fixItem, Acid)
     end
-
-    --[[
-    	local _source = source	
-	print(source)
-	print(cb)
-	print(product)
-	local xPlayer = ESX.GetPlayerFromId(_source)
-	
-	if product == nil then		
-		TriggerClientEvent("pNotify:SendNotification", _source, {
-    			text = "You don't have any end product ready.",
-    			type = "error",
-    			queue = "lmao",
-    			timeout = 3000,
-    			layout = "centerLeft"	
-		})
-	cb(false)
-	
-	else
-	xPlayer.addInventoryItem(product, 1)
-	cb(true)
-	end
-	--]]
     cb(true)
 end)
 
-ESX.RegisterServerCallback('EWine:process', function(source, cb)
-
-    local _source = source
-
-    local xPlayer = ESX.GetPlayerFromId(_source)
-
-    if xPlayer.getInventoryItem('coke').count >= 2 then
-        xPlayer.removeInventoryItem('coke', 2)
-        xPlayer.addInventoryItem('coke_pooch', 1)
-        cb(true)
-    else
-        TriggerClientEvent('esx:showNotification', source, '~r~Not enough coca leaves')
-        cb(false)
-    end
-
-end)
-ESX.RegisterServerCallback('EWine:grind', function(source, cb)
-
-    local _source = source
-
-    local xPlayer = ESX.GetPlayerFromId(_source)
-
-    if xPlayer.getInventoryItem('coke').count >= 2 then
-        xPlayer.removeInventoryItem('coke', 2)
-        xPlayer.addInventoryItem('coke_con', 1)
-        TriggerClientEvent("pNotify:SendNotification", _source, {
-            text = "You grind your materials into a concoction.",
-            type = "success",
-            queue = "lmao",
-            timeout = 3000,
-            layout = "centerLeft"
-        })
-        cb(true)
-    else
-        TriggerClientEvent("pNotify:SendNotification", _source, {
-            text = "You don't have enough materials.",
-            type = "error",
-            queue = "lmao",
-            timeout = 3000,
-            layout = "centerLeft"
-        })
-        cb(false)
-    end
-
-end)
-ESX.RegisterServerCallback('EWine:addAcid', function(source, cb)
-
-    local _source = source
-
-    local xPlayer = ESX.GetPlayerFromId(_source)
-
-    if xPlayer.getInventoryItem('hcl').count >= 1 then
-        xPlayer.removeInventoryItem('hcl', 1)
-        TriggerClientEvent("pNotify:SendNotification", _source, {
-            text = "You pour your acid into the vats.",
-            type = "success",
-            queue = "lmao",
-            timeout = 3000,
-            layout = "centerLeft"
-        })
-        print("test")
-        cb(true)
-    else
-        TriggerClientEvent("pNotify:SendNotification", _source, {
-            text = "You don't have anymore acid.",
-            type = "error",
-            queue = "lmao",
-            timeout = 3000,
-            layout = "centerLeft"
-        })
-        cb(false)
-    end
-
-end)
-ESX.RegisterServerCallback('EWine:addIngred', function(source, cb)
-
-    local _source = source
-
-    local xPlayer = ESX.GetPlayerFromId(_source)
-
-    if xPlayer.getInventoryItem('grapes').count >= 1 then
-        xPlayer.removeInventoryItem('grapes', 1)
-        TriggerClientEvent("pNotify:SendNotification", _source, {
-            text = "You dump your grapes into the vat.",
-            type = "success",
-            queue = "lmao",
-            timeout = 3000,
-            layout = "centerLeft"
-        })
-        print("test")
-        cb(true)
-    else
-        TriggerClientEvent("pNotify:SendNotification", _source, {
-            text = "You don't have anymore grapes to dump.",
-            type = "error",
-            queue = "lmao",
-            timeout = 3000,
-            layout = "centerLeft"
-        })
-        cb(false)
-    end
-
-end)
-
-RegisterServerEvent("EWine:OnNotification")
-AddEventHandler("EWine:OnNotification", function(isOn)
-    print("We're in the server event")
-    if isOn then
-        -- Turning 
-        TriggerClientEvent("pNotify:SendNotification", _source, {
-            text = "The noises from the machines seem to slow down and shut off",
-            type = "success",
-            queue = "lmao",
-            timeout = 3000,
-            layout = "bottomCenter"
-        })
-    else
-        -- Turning on
-        TriggerClientEvent("pNotify:SendNotification", _source, {
-            text = "The machines seem to buzz and whirr into life",
-            type = "success",
-            queue = "lmao",
-            timeout = 3000,
-            layout = "bottomCenter"
-        })
-    end
-end)
 
 Citizen.CreateThread(function()
     while true do
@@ -363,14 +150,14 @@ Citizen.CreateThread(function()
         if IsOn then
             if Temperature > Config.highTemperature then
                 mistakes = mistakes + 1
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'overheat', 0.1, Config.Temperature)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'overheat', 0.1, Config.temperatureLocation)
             end
             if Temperature < Config.lowTemperature then
                 mistakes = mistakes + 1
             end
             if Acid > Config.highAcidLevel then
                 mistakes = mistakes + 1
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'acid', 0.1, Config.Acid)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 30.0, 'acid', 0.1, Config.acidLocation)
             end
             if Acid < Config.lowAcidLevel then
                 mistakes = mistakes + 1
@@ -394,28 +181,26 @@ Citizen.CreateThread(function()
         Citizen.Wait(Config.breakRate)
         if IsOn then
             itemBreak = math.random(1, 5)
-            print(itemBreak)
             if itemBreak == 1 then
-                print("transformer")
                 Transformer = false;
                 TriggerClientEvent("EWine:updateData", -1, "transformer", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 45.0, 'boom', 0.1, Config.tBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 45.0, 'boom', 0.1, Config.transformerLocation)
             elseif itemBreak == 2 then
                 Air = false;
                 TriggerClientEvent("EWine:updateData", -1, "air", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'metal', 0.1, Config.aBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'metal', 0.1, Config.filterLocation)
             elseif itemBreak == 3 then
                 Breaker = false;
                 TriggerClientEvent("EWine:updateData", -1, "breaker", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'shock', 0.1, Config.bBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'shock', 0.1, Config.breakerLocation)
             elseif itemBreak == 4 then
                 Liquid = false;
                 TriggerClientEvent("EWine:updateData", -1, "liquid", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'water', 0.1, Config.lBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'water', 0.1, Config.liquidLocation)
             elseif itemBreak == 5 then
                 Hopper = false;
                 TriggerClientEvent("EWine:updateData", -1, "hopper", false)
-                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'thud', 0.1, Config.hBox)
+                TriggerEvent('InteractSound_SV:PlayWithinDistanceOfCoords', 35.0, 'thud', 0.1, Config.hopperLocation)
             end
         end
     end
@@ -424,7 +209,7 @@ Citizen.CreateThread(function()
     while true do
         Citizen.Wait(100)
         if IsOn then
-            Citizen.Wait(Config.materialConsumptionRate)
+            Citizen.Wait(Config.variableRiseRate)
             if Temperature <= 212 then
                 Temperature = Temperature + 1;
                 TriggerClientEvent("EWine:updateData", -1, "temperature", Temperature)
@@ -433,8 +218,6 @@ Citizen.CreateThread(function()
                 Acid = Acid + 0.05;
                 TriggerClientEvent("EWine:updateData", -1, "acid", Acid)
             end
-            print("Temperature and Acid Increase by 0.1")
-
         end
 
     end
@@ -444,20 +227,17 @@ Citizen.CreateThread(function()
         Citizen.Wait(100)
         if IsOn then
             Citizen.Wait(60000)
-            print(mistakes)
             if mistakes < 5 then
                 highqual = highqual + 1
                 TriggerClientEvent("EWine:updateData", -1, "highqual", highqual)
-                print("reward 1 high qual wine")
             else
                 lowqual = lowqual + 1
                 TriggerClientEvent("EWine:updateData", -1, "lowqual", lowqual)
-                print("reward 1 low qual wine")
             end
             mistakes = 0
-            if Water - 5 > -1 and Grape - 5 > -1 then
-                Water = Water - 5
-                Grape = Grape - 5
+            if Water - Config.startAmount >= 0 and Grape - Config.startAmount >= 0 then
+                Water = Water - Config.startAmount
+                Grape = Grape - Config.startAmount
                 TriggerClientEvent("EWine:updateData", -1, "grape", Grape)
                 TriggerClientEvent("EWine:updateData", -1, "water", Water)
             else
@@ -475,11 +255,11 @@ ESX.RegisterServerCallback('EWine:sell', function(source, cb)
     local xPlayer = ESX.GetPlayerFromId(_source)
     if xPlayer.getInventoryItem('highqualwine').count >= 1 then
         xPlayer.removeInventoryItem('highqualwine', 1)
-        xPlayer.addMoney(2000)
+        xPlayer.addMoney(Config.fineWinePrice)
         cb(true)
     elseif xPlayer.getInventoryItem('lowqualwine').count >= 1 then
         xPlayer.removeInventoryItem('lowqualwine', 1)
-        xPlayer.addMoney(400)
+        xPlayer.addMoney(Config.basicWinePrice)
         cb(true)
     else
         cb(false)

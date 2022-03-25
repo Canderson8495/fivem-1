@@ -233,16 +233,9 @@ function checkForStartSwitchAttempt()
                             ESX.TriggerServerCallback('EWine:fix', function(output)
                                 grindResult = output
                             end, "power")
-                            TriggerEvent("pNotify:SendNotification", {
-                                text = "The machine quiets down slowly.",
-                                type = "success",
-                                queue = "wow",
-                                timeout = "5000",
-                                layout = "centerLeft"
-                            })
 
                         else
-                            if grapeLoad > 4 and waterLoad > 4 then
+                            if grapeLoad >= Config.startAmount and waterLoad >= Config.startAmount then
                                 ESX.TriggerServerCallback('EWine:fix', function(output)
                                     grindResult = output
                                 end, "power")
@@ -253,8 +246,6 @@ function checkForStartSwitchAttempt()
                                     timeout = "5000",
                                     layout = "centerLeft"
                                 })
-                                TriggerEvent("EWine:OnNotification", isOn)
-                                Citizen.Wait(500)
                             else
                                 TriggerEvent("pNotify:SendNotification", {
                                     text = "The machine is empty!",
@@ -285,7 +276,6 @@ function checkForVariableBoxFix(fixLocation, name, currValue, prompt, low, high)
             Draw3DText(fixLocation.x, fixLocation.y, fixLocation.z,
                 prompt, 4, 0.15, 0.1)
             if IsControlJustReleased(0, Keys['E']) then
-                print("Called")
                 -- Change this for all of them
                 Citizen.CreateThread(function()
                     ESX.TriggerServerCallback('EWine:fix', function(output)
@@ -486,25 +476,19 @@ AddEventHandler('EWine:updateData', function(item, value)
     elseif item == "liquid" then
         Liquid = value
     elseif item == "temperature" then
-        print(value)
         temperature = value
     elseif item == "lowqual" then
-        print(value)
         lowqual = value
     elseif item == "highqual" then
-        print(value)
         highqual = value
     elseif item == "acid" then
-        print(value)
         acidLevel = value
     elseif item == "grape" then
         grapeLoad = value
     elseif item == "water" then
-        print(value)
         waterLoad = value
     elseif item == "power" then
         isOn = value
-        print(isOn)
     end
 end)
 Citizen.CreateThread(function()
@@ -562,7 +546,6 @@ Citizen.CreateThread(function()
                 DisplayHelpText("Press ~INPUT_PICKUP~ to sell.")
 
                 if IsControlJustReleased(1, 51) then
-                    print("attempting sell")
                     ESX.TriggerServerCallback('EWine:sell', function(output)
                         if output == true then
                             TaskStartScenarioInPlace(PlayerPedId(), 'PROP_HUMAN_BUM_BIN', 0, true)
