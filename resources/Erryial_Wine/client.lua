@@ -536,7 +536,9 @@ Citizen.CreateThread(function()
                             TaskStartScenarioInPlace(PlayerPedId(), 'PROP_HUMAN_BUM_BIN', 0, true)
                             isSelling = true
                             Citizen.CreateThread(function()
-                                exports['progressBars']:startUI(3000, "Selling")
+                                ESX.Streaming.RequestAnimDict("mp_common", function()
+                                    TaskPlayAnim(PlayerPedId(), "mp_common", "givetake1_a", 8.0, -8.0, -1, 0, 0.0, false, false, false)
+                                end)
                                 Citizen.Wait(3000)
                                 ClearPedTasksImmediately(PlayerPedId())
                                 isSelling = false
