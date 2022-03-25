@@ -135,30 +135,6 @@ end)
 
 local displayed = false
 local menuOpen = false
--- Deprecated
---[[
-local blipPickup = AddBlipForCoord(Config.PickupBlip.x,Config.PickupBlip.y,Config.PickupBlip.z)
-
-			SetBlipSprite (blipPickup, 514)
-			SetBlipDisplay(blipPickup, 4)
-			SetBlipScale  (blipPickup, 1.1)
-			SetBlipColour (blipPickup, 24)
-			SetBlipAsShortRange(blipPickup, true)
-			BeginTextCommandSetBlipName("STRING")
-			AddTextComponentString("Cocoa Leaves Plantation")
-			EndTextCommandSetBlipName(blipPickup)
-			
-local blipProcess = AddBlipForCoord(Config.Processing.x, Config.Processing.y, Config.Processing.z)
-
-			SetBlipSprite (blipProcess, 514)
-			SetBlipDisplay(blipProcess, 4)
-			SetBlipScale  (blipProcess, 1.1)
-			SetBlipColour (blipProcess, 24)
-			SetBlipAsShortRange(blipProcess, true)
-			BeginTextCommandSetBlipName("STRING")
-			AddTextComponentString("Cocaine production")
-			EndTextCommandSetBlipName(blipProcess)
---]]
 
 local process = true
 Citizen.CreateThread(function()
@@ -172,37 +148,38 @@ Citizen.CreateThread(function()
         renderAndGiveIngredients()
         -- Put Grape spot
         prompt = "~w~Grape Grinder~y~\nPress [~b~E~y~] to put your grapes in.\n~w~" .. grapeLoad .. " ounces";
-		ingredLoader(Config.Processing, "grape", grapeLoad, prompt)
+		ingredLoader(Config.grapeStorage, "grape", grapeLoad, prompt)
         
 		-- Put Water spot
         prompt = "~w~Water Storage~y~\nPress [~b~E~y~] to add your water.\n~w~" .. waterLoad .. " gallons";
-		ingredLoader(Config.WaterStorage, "water", waterLoad, prompt)
+		ingredLoader(Config.waterStorage, "water", waterLoad, prompt)
 		
 
         -- Show Switch to Start/Stop
         checkForStartSwitchAttempt()
         
-        -- tBox
+        -- transformerLocation
         prompt = "~w~Transformer~y~\nPress [~b~E~y~] to fix the transformer"
-        checkBoxFix(Config.tBox, "transformer", Transformer, prompt)
-        -- bBox
+        checkBoxFix(Config.transformerLocation, "transformer", Transformer, prompt)
+        -- breakerLocation
         prompt = "~w~Breaker~y~\nPress [~b~E~y~] to fix the breaker"
-        checkBoxFix(Config.bBox, "breaker", Breaker, prompt)
-        -- aBox
+        checkBoxFix(Config.breakerLocation, "breaker", Breaker, prompt)
+        -- filterLocation
         prompt = "~w~Filter~y~\nPress [~b~E~y~] to fix the air filter"
-        checkBoxFix(Config.aBox, "air", Air, prompt)
-        -- lBox
+        checkBoxFix(Config.filterLocation, "air", Air, prompt)
+        -- liquidLocation
         prompt = "~w~Water~y~\nPress [~b~E~y~] to patch hole"
-        checkBoxFix(Config.lBox, "liquid", Liquid, prompt)
-        -- hBox
+        checkBoxFix(Config.liquidLocation, "liquid", Liquid, prompt)
+        -- hopperLocation
         prompt = "~w~Hopper~y~\nPress [~b~E~y~] to fix the hopper"
-        checkBoxFix(Config.hBox, "hopper", Hopper, prompt)
-        -- Acid
+        checkBoxFix(Config.hopperLocation, "hopper", Hopper, prompt)
+
+        -- AcidLocation
         prompt = "~w~Acid~y~\nPress [~b~E~y~] to make your wine more acidic\n~w~" .. tonumber(string.format("%.2f", acidLevel)) .. " ph"
-        checkForVariableBoxFix(Config.Acid, "acid", acidLevel, prompt, Config.lowAcidLevel, Config.highAcidLevel)
-        --Temperature
+        checkForVariableBoxFix(Config.acidLocation, "acid", acidLevel, prompt, Config.lowAcidLevel, Config.highAcidLevel)
+        -- temperatureLocation
         prompt = "~w~Temperature~y~\nPress [~b~E~y~] to lower the temperature.\n~w~" .. temperature .. " F"
-        checkForVariableBoxFix(Config.Temperature, "temperature", temperature, prompt, Config.lowTemperature, Config.highTemperature)
+        checkForVariableBoxFix(Config.temperatureLocation, "temperature", temperature, prompt, Config.lowTemperature, Config.highTemperature)
         
 
         -- EndProduct
@@ -226,12 +203,6 @@ Citizen.CreateThread(function()
                 end
             end
 
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
         end
 
     end
@@ -299,12 +270,6 @@ function checkForStartSwitchAttempt()
                 end
             end
 
-            if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-                GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                    GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-                process = false
-            end
         end
 end
 
@@ -332,12 +297,6 @@ function checkForVariableBoxFix(fixLocation, name, currValue, prompt, low, high)
             end
         end
 
-        if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-            GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-            GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-            process = false
-        end
     end
 end
 
@@ -360,13 +319,6 @@ function ingredLoader(loadLocation, item, numAvail, prompt)
 				end, item)
 			end)
 		end
-	end
-
-	if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-		GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-		GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-			GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-		process = false
 	end
 	end
 end
@@ -399,12 +351,6 @@ function checkBoxFix(Box, name, currValue, prompt)
         end
         tryPlayerFix(Box, name, prompt)
 
-        if GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-            GetEntityCoords(GetPlayerPed(-1)), true) < 20 and
-            GetDistanceBetweenCoords(Config.Processing.x, Config.Processing.y, Config.Processing.z,
-                GetEntityCoords(GetPlayerPed(-1)), true) > 3 then
-            process = false
-        end
     end
 end
 

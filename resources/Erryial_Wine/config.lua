@@ -1,16 +1,21 @@
 Config = {} 
 Config.PickupBlip = {x = -1661.00 , y = 2309.507 ,z = 55.50}
-Config.Processing = {x = 913.67  , y = -1975.15 ,z = 45.6}
+
 Config.Switch = {x = 917.64  , y = -1897.74 ,z = 29.6}
 Config.EndProduct = {x = 900.01  , y = -1897.53 ,z = 29.6}
-Config.Temperature = {x = 910.95  , y = -1903.2 ,z = 29.6}
-Config.Acid = {x = 888.91  , y = -1994.67 ,z = 29.6}
-Config.WaterStorage = {x = 905.99  , y = -1964.46 ,z = 37.3}
-Config.tBox = {x = 865.95  , y = -1967.92 ,z = 29.31}
-Config.bBox = {x = 893.34  , y = -2007.26 ,z = 35.80}
-Config.aBox = {x = 862.55  , y = -2004.25 ,z = 37.60}
-Config.hBox = {x = 911.75  , y = -1897.29 ,z = 40.30}
-Config.lBox = {x = 900.80 , y = -1890.33 ,z = 34.2}
+
+Config.grapeStorage = {x = 913.67  , y = -1975.15 ,z = 45.6}
+Config.waterStorage = {x = 905.99  , y = -1964.46 ,z = 37.3}
+
+Config.transformerLocation = {x = 865.95  , y = -1967.92 ,z = 29.31}
+Config.breakerLocation = {x = 893.34  , y = -2007.26 ,z = 35.80}
+Config.filterLocation = {x = 862.55  , y = -2004.25 ,z = 37.60}
+Config.liquidLocation = {x = 900.80 , y = -1890.33 ,z = 34.2}
+Config.hopperLocation = {x = 911.75  , y = -1897.29 ,z = 40.30}
+Config.acidLocation = {x = 888.91  , y = -1994.67 ,z = 29.6}
+Config.temperatureLocation = {x = 910.95  , y = -1903.2 ,z = 29.6}
+
+
 Config.sell = {x = -1893.339, y = 2075.431, z = 140.9975}
 Config.breakRate = 25000 --ms
 Config.materialConsumptionRate = 1000
