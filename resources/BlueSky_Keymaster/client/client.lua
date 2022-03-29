@@ -2,7 +2,7 @@ local Result = nil
 local NUI_status = false
 
 local DefaultSettings = {
-    Keys = {"W", "A", "S", "D"}, -- Send a result message if true and callback when message closed or callback immediately without showing the message
+    keys = {"W", "A", "S", "D"}, -- Send a result message if true and callback when message closed or callback immediately without showing the message
     speed = 30, -- pixels / second
     winScore = 50, -- Score to win
     loseScore = -25,
