@@ -43,3 +43,11 @@ Config.startAmount = 5
 Config.fineWinePrice = 2000
 Config.basicWinePrice = 400
 Config.ingredLoadAmount = 5
+
+Config.miniGameSettings = {
+    keys = {"W", "A", "S", "D"}, -- Send a result message if true and callback when message closed or callback immediately without showing the message
+    speed = 30, -- pixels / second
+    winScore = 50, -- Score to win
+    loseScore = -25,
+    missScore = -5 -- Lose if this score is reached
+}
