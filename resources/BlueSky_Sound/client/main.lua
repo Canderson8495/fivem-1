@@ -25,8 +25,8 @@ end)
 --
 -- Starts playing a sound locally on a single client.
 ------
-RegisterNetEvent('Erryial_Sound_CL:PlayOnOne')
-AddEventHandler('Erryial_Sound_CL:PlayOnOne', function(soundFile, soundVolume)
+RegisterNetEvent('BlueSky_Sound_CL:PlayOnOne')
+AddEventHandler('BlueSky_Sound_CL:PlayOnOne', function(soundFile, soundVolume)
     if hasPlayerLoaded then
         SendNUIMessage({
             transactionType = 'playSound',
@@ -47,8 +47,8 @@ end)
 --
 -- Starts playing a sound on all clients who are online in the server.
 ------
-RegisterNetEvent('Erryial_Sound_CL:PlayOnAll')
-AddEventHandler('Erryial_Sound_CL:PlayOnAll', function(soundFile, soundVolume)
+RegisterNetEvent('BlueSky_Sound_CL:PlayOnAll')
+AddEventHandler('BlueSky_Sound_CL:PlayOnAll', function(soundFile, soundVolume)
     if hasPlayerLoaded then
         SendNUIMessage({
             transactionType = 'playSound',
@@ -74,8 +74,8 @@ end)
 -- Starts playing a sound on a client if the client is within the specificed maxDistance from the playOnEntity.
 -- @TODO Change sound volume based on the distance the player is away from the playOnEntity.
 ------
-RegisterNetEvent('Erryial_Sound_CL:PlayWithinDistance')
-AddEventHandler('Erryial_Sound_CL:PlayWithinDistance', function(soundOrigin, maxDistance, soundFile, soundVolume)
+RegisterNetEvent('BlueSky_Sound_CL:PlayWithinDistance')
+AddEventHandler('BlueSky_Sound_CL:PlayWithinDistance', function(soundOrigin, maxDistance, soundFile, soundVolume)
 	if hasPlayerLoaded then
 		local playerCoords = GetEntityCoords(PlayerPedId())
         local distance = GetDistanceBetweenCoords(soundOrigin.x, soundOrigin.y, soundOrigin.z, playerCoords)
