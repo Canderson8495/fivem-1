@@ -22,9 +22,9 @@ function StartKeyMaster(settings)
     
     NUI_status = true
     SendNUIMessage({
-        action = 'start',
-        settings = settings.settings,
-        keys = settings.keys,
+        app = 'keymaster',
+        method = 'start',
+        data = true,
     })
     while NUI_status do
         Wait(5)
@@ -36,6 +36,7 @@ function StartKeyMaster(settings)
 end
 
 RegisterNUICallback('success', function()
+    print("meow")
     Result = true
     Wait(100)
     NUI_status = false
